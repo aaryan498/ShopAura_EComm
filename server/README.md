@@ -26,3 +26,18 @@ Once written all models inside it, run:
 ```bash
 npx prisma migrate dev --name init
 ```
+
+## When done with writing schemas in schema.prisma, run :
+```bash
+npx prisma generate
+```
+
+NOTE: 
+Use this in `schema.prisma`:
+```
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+```
