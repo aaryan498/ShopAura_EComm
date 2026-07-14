@@ -41,3 +41,19 @@ generator client {
   moduleFormat = "cjs"
 }
 ```
+
+
+
+
+
+# Authentication
+
+## 1. Install following packages:
+```bash
+npm i @nestjs/jwt @nestjs/config @nestjs/passport bcrypt class-validator
+```
+
+## For DTOs, remember to install:
+```bash
+npm i class-validator
+```
