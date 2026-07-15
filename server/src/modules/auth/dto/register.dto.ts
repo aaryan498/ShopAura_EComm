@@ -13,7 +13,7 @@ export class RegisterDto {
     @IsOptional()
     @IsString({message: "Middle name must be a string"})
     @MaxLength(50, {message: "Middle name must be less than 50 characters"})
-    middleName? : string;
+    middleName! : string | null;
 
     @IsNotEmpty({message: "Last name is required"})
     @IsString({message: "Last name must be a string"})

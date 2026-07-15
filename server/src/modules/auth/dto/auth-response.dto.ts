@@ -13,7 +13,7 @@ export class AuthResponseDto {
     user! : {
         id : string;
         firstName : string;
-        middleName? : string;
+        middleName : string | null;
         lastName : string;
         email : string;
         role : Role;

@@ -1,10 +1,11 @@
-import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 import { AuthResponseDto } from './dto/auth-response.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { randomBytes } from 'crypto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,8 +18,82 @@ export class AuthService {
         private jwtService: JwtService
     ) { }
 
-    // NOTE: Shifted to any right now, move back to AuthResponseDto when return works.
-    async register(registerDto: RegisterDto): Promise<any> {
+    
+
+    async generateTokens(userId: string, email: string, role: string): Promise<{ accessToken: string, refreshToken: string }> {
+        const payload = {
+            sub: userId,
+            email,
+            role
+        }
+        const refreshId = randomBytes(16).toString('hex');
+
+        const [accessToken, refreshToken] = await Promise.all([
+            this.jwtService.signAsync(payload, {
+                expiresIn: '15m'
+            }),
+            this.jwtService.signAsync({ ...payload, refreshId }, {
+                expiresIn: '7d'
+            })
+        ])
+
+        return {
+            accessToken,
+            refreshToken
+        }
+
+    }
+
+    async updateRefreshTokens(userId: string, refreshToken: string): Promise<void> {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        })
+
+        if (!user) {
+            throw new NotFoundException('User not found')
+        }
+
+        await this.prisma.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                refreshToken
+            }
+        })
+    }
+
+    async refreshTokens(userId : string) : Promise<AuthResponseDto> {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                id : userId
+            },
+            select: {
+                id : true,
+                firstName : true,
+                middleName : true,
+                lastName : true,
+                email : true,
+                role : true,
+                password : false
+            }
+        })
+        if(!user){
+            throw new NotFoundException("User Not Found");
+        }
+
+        const tokens = await this.generateTokens(user.id, user.email, user.role);
+        await this.updateRefreshTokens(user.id, tokens.refreshToken);
+
+        return {
+            ...tokens,
+            user
+        }
+    }
+
+    async register(registerDto: RegisterDto): Promise<AuthResponseDto> {
         const { firstName, middleName, lastName, email, password, role } = registerDto;
 
         const existingUser = await this.prisma.user.findUnique({
@@ -69,51 +144,47 @@ export class AuthService {
         }
     }
 
+    async login(loginDto : LoginDto) : Promise<AuthResponseDto> {
+        const { email, password } = loginDto;
 
-    async generateTokens(userId: string, email: string, role: string): Promise<{ accessToken: string, refreshToken: string }> {
-        const payload = {
-            sub: userId,
-            email,
-            role
-        }
-        const refreshId = randomBytes(16).toString('hex');
-
-        const [accessToken, refreshToken] = await Promise.all([
-            this.jwtService.signAsync(payload, {
-                expiresIn: '15m'
-            }),
-            this.jwtService.signAsync({ ...payload, refreshId }, {
-                expiresIn: '7d'
-            })
-        ])
-
-        return {
-            accessToken,
-            refreshToken
-        }
-
-    }
-
-
-    async updateRefreshTokens(userId: string, refreshToken: string): Promise<void> {
         const user = await this.prisma.user.findUnique({
             where: {
-                id: userId
+                email
             }
         })
 
-        if (!user) {
-            throw new NotFoundException('User not found')
+        if(!user){
+            throw new NotFoundException('User with this email not found. Register First');
         }
 
+        if(!(await bcrypt.compare(password, user.password))){
+            throw new UnauthorizedException('Incorrect password')
+        }
+
+        const tokens = await this.generateTokens( user.id, user.email, user.role);
+        await this.updateRefreshTokens(user.id, tokens.refreshToken);
+
+        return {
+            ...tokens,
+            user : {
+                id : user.id,
+                firstName : user.firstName,
+                middleName : user.middleName,
+                lastName : user.lastName,
+                email : user.email,
+                role : user.role
+            }
+        }
+    }
+
+    async logout(userId : string) : Promise<void> {
         await this.prisma.user.update({
             where: {
                 id: userId
             },
             data: {
-                refreshToken
+                refreshToken: null
             }
         })
     }
-
 }
