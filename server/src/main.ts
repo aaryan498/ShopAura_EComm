@@ -60,7 +60,7 @@ async function bootstrap() {
     .addServer('http://localhost:3000', 'Development Server')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('server/docs', app, document, {
+  SwaggerModule.setup('api/docs', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
       tagsSorter: 'alpha',
