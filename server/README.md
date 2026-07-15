@@ -50,10 +50,20 @@ generator client {
 
 ## 1. Install following packages:
 ```bash
-npm i @nestjs/jwt @nestjs/config @nestjs/passport bcrypt class-validator
+npm i @nestjs/jwt @nestjs/config @nestjs/passport bcrypt class-validator class-transformer
 ```
 
 ## For DTOs, remember to install:
 ```bash
 npm i class-validator
 ```
+
+
+## For getting swagger:
+```bash
+npm i @nestjs/swagger
+```
+> It is used to generate swagger docs, which contains all the routes and their details.
+
+
+
