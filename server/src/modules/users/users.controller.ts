@@ -14,7 +14,7 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 
 
 
-@ApiTags('users')
+@ApiTags('Users')
 @ApiBearerAuth('JWT-auth')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('users')

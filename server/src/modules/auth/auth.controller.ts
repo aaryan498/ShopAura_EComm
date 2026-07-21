@@ -6,8 +6,9 @@ import { GetUser } from 'src/common/decorators/get-user.decorator';
 import { RefreshTokenGuard } from './guards/refresh-token.guard';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { LoginDto } from './dto/login.dto';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
 

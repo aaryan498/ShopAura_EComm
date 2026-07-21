@@ -35,10 +35,10 @@ async function bootstrap() {
     .setTitle('ShopAura E-Commerce NestJS API')
     .setDescription('NestJS API')
     .setVersion('1.0')
-    .addTag('auth', 'Authentication related endpoints')
-    .addTag('users', 'User management related endpoints')
-    .addTag('products', 'Product management related endpoints')
-    .addTag('orders', 'Order management related endpoints')
+    .addTag('Auth', 'Authentication related endpoints')
+    .addTag('Users', 'User management related endpoints')
+    .addTag('Products', 'Product management related endpoints')
+    .addTag('Orders', 'Order management related endpoints')
     .addBearerAuth({
         type: 'http',
         scheme: 'bearer',
@@ -60,7 +60,7 @@ async function bootstrap() {
     .addServer('http://localhost:3000', 'Development Server')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document, {
+  SwaggerModule.setup('apidocs', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
       tagsSorter: 'alpha',
