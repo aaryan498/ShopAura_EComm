@@ -6,6 +6,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { CategoriesModule } from './modules/categories/categories.module';
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
       isGlobal: true,
       envFilePath: '.env'
     }),
-    PrismaModule, AuthModule, UsersModule, CategoriesModule
+    PrismaModule, AuthModule, UsersModule, CategoriesModule, ProductsModule
   ],
   controllers: [AppController],
   providers: [AppService],

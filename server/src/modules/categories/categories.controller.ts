@@ -19,6 +19,7 @@ export class CategoriesController {
     @Post()
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.ADMIN)
+    @ApiBearerAuth('JWT-auth')
     @ApiOperation({ summary: 'Create a new category' })
     @ApiBody({ type: CreateCategoryDto })
     @ApiResponse({
