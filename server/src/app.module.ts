@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { ProductsModule } from './modules/products/products.module';
+import { seconds, ThrottlerModule } from '@nestjs/throttler';
+import { OrdersModule } from './modules/orders/orders.module';
 
 @Module({
   imports: [
@@ -14,9 +16,17 @@ import { ProductsModule } from './modules/products/products.module';
       isGlobal: true,
       envFilePath: '.env'
     }),
-    PrismaModule, AuthModule, UsersModule, CategoriesModule, ProductsModule
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: seconds(60),
+          limit: 10,
+        }
+      ]
+    }),
+    PrismaModule, AuthModule, UsersModule, CategoriesModule, ProductsModule, OrdersModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

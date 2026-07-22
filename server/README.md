@@ -68,3 +68,25 @@ npm i @nestjs/swagger
 
 
 
+
+## To use Rate Limiter
+Use package `@nestjs/throttler`
+```bash
+npm i @nestjs/throttler
+```
+
+and use this: 
+```
+import { seconds } from '@nestjs/throttler';
+
+ThrottlerModule.forRoot({
+  throttlers: [
+    {
+      ttl: seconds(60),
+      limit: 10,
+    },
+  ],
+});
+```
+
+
