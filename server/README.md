@@ -22,15 +22,16 @@ npx prisma init
 ## Writing Schema/Models
 > We have to write all the models inside file `schema.prisma` in prisma folder.
 
+## When done with writing schemas in schema.prisma, run :
+```bash
+npx prisma generate
+```
+
 Once written all models inside it, run:
 ```bash
 npx prisma migrate dev --name init
 ```
 
-## When done with writing schemas in schema.prisma, run :
-```bash
-npx prisma generate
-```
 
 NOTE: 
 Use this in `schema.prisma`:

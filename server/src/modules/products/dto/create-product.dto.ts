@@ -23,9 +23,7 @@ export class CreateProductDto {
     @Min(0, { message: 'Product Price must be greater than 0'})
     @Type(() => Number)
     @IsNumber({
-        maxDecimalPlaces: 2,
-        allowNaN: false,
-        allowInfinity: false
+        maxDecimalPlaces: 2
     }, { message: 'Product Price must be a number'})
     price! : number;
 
