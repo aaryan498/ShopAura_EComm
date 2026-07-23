@@ -31,7 +31,7 @@ export class QueryCategoryDto {
     @IsNumber()
     @Min(1)
     @IsOptional()
-    page = 1;
+    page: number = 1;
 
 
     @ApiPropertyOptional({ 
@@ -44,7 +44,7 @@ export class QueryCategoryDto {
     @IsNumber()
     @Min(1)
     @IsOptional()
-    limit = 10;
+    limit: number = 10;
     
 
 

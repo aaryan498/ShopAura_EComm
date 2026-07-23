@@ -323,7 +323,7 @@ export type OrderScalarWhereWithAggregatesInput = {
 
 export type OrderCreateInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   shippingAddress?: string | null
@@ -337,7 +337,7 @@ export type OrderCreateInput = {
 
 export type OrderUncheckedCreateInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   userId: string
@@ -379,7 +379,7 @@ export type OrderUncheckedUpdateInput = {
 
 export type OrderCreateManyInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   userId: string
@@ -596,7 +596,7 @@ export type OrderUpdateOneRequiredWithoutOrderItemsNestedInput = {
 
 export type OrderCreateWithoutUserInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   shippingAddress?: string | null
@@ -609,7 +609,7 @@ export type OrderCreateWithoutUserInput = {
 
 export type OrderUncheckedCreateWithoutUserInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   cartId?: string | null
@@ -663,7 +663,7 @@ export type OrderScalarWhereInput = {
 
 export type OrderCreateWithoutCartInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   shippingAddress?: string | null
@@ -676,7 +676,7 @@ export type OrderCreateWithoutCartInput = {
 
 export type OrderUncheckedCreateWithoutCartInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   userId: string
@@ -715,7 +715,7 @@ export type OrderUpdateManyWithWhereWithoutCartInput = {
 
 export type OrderCreateWithoutPaymentInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   shippingAddress?: string | null
@@ -728,7 +728,7 @@ export type OrderCreateWithoutPaymentInput = {
 
 export type OrderUncheckedCreateWithoutPaymentInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   userId: string
@@ -783,7 +783,7 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
 
 export type OrderCreateWithoutOrderItemsInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   shippingAddress?: string | null
@@ -796,7 +796,7 @@ export type OrderCreateWithoutOrderItemsInput = {
 
 export type OrderUncheckedCreateWithoutOrderItemsInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   userId: string
@@ -851,7 +851,7 @@ export type OrderUncheckedUpdateWithoutOrderItemsInput = {
 
 export type OrderCreateManyUserInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   cartId?: string | null
@@ -899,7 +899,7 @@ export type OrderUncheckedUpdateManyWithoutUserInput = {
 
 export type OrderCreateManyCartInput = {
   id?: string
-  orderNumber: string
+  orderNumber?: string
   status: $Enums.OrderStatus
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   userId: string
