@@ -90,3 +90,21 @@ ThrottlerModule.forRoot({
 ```
 
 
+For Stripe:
+```bash
+npm i stripe
+```
+then in the PaymentsService file, add the following:
+```
+import Stripe from 'stripe';
+
+<!-- Then Inside class add the following -->
+private stripe: Stripe;
+constructor() {
+  this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2020-08-27',
+  });
+}
+```
+
+

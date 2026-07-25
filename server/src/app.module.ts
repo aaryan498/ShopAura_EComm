@@ -9,6 +9,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { ProductsModule } from './modules/products/products.module';
 import { seconds, ThrottlerModule } from '@nestjs/throttler';
 import { OrdersModule } from './modules/orders/orders.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { OrdersModule } from './modules/orders/orders.module';
         }
       ]
     }),
-    PrismaModule, AuthModule, UsersModule, CategoriesModule, ProductsModule, OrdersModule
+    PrismaModule, AuthModule, UsersModule, CategoriesModule, ProductsModule, OrdersModule, PaymentsModule
   ],
   controllers: [AppController],
   providers: [AppService],
