@@ -82,7 +82,7 @@ export class OrdersService {
         const latestCart = await this.prisma.cart.findFirst({
             where: {
                 id,
-                checkedOut: false,
+                checkoutCompleted: false,
             },
             orderBy: {
                 createdAt: 'desc',

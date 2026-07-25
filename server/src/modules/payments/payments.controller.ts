@@ -80,7 +80,11 @@ export class PaymentsController {
     @ApiForbiddenResponse({
         description: 'Not Authenticated'
     })
-    async getAllPayments(@GetUser('id') userId: string): Promise<PaymentApiResponseDto> {
+    async getAllPayments(@GetUser('id') userId: string): Promise<{
+        success: boolean,
+        data: PaymentResponseDto[],
+        message?: string
+    }> {
         return await this.paymentsService.getAllPayments(userId);
     }
 

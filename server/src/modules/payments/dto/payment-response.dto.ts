@@ -124,9 +124,9 @@ export class PaymentApiResponseDto {
 
     @ApiProperty({
         description: 'Payment response data',
-        type: PayementResponseDto,
+        type: PaymentResponseDto,
     })
-    data!: PayementResponseDto;
+    data!: PaymentResponseDto;
 
     @ApiProperty({
         description: 'Payment response optional message',

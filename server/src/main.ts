@@ -32,14 +32,15 @@ async function bootstrap() {
 
   // Enable Swagger Docs
   const config = new DocumentBuilder()
-    .setTitle('ShopAura E-Commerce NestJS API')
-    .setDescription('NestJS API')
+    .setTitle('ShopAura E-Commerce NestJS API Documentation')
+    .setDescription('The complete detailed documentation of all the api endpoints.')
     .setVersion('1.0')
     .addTag('Auth', 'Authentication related endpoints')
     .addTag('Users', 'User management related endpoints')
     .addTag('Categories', 'Category management related endpoints')
     .addTag('Products', 'Product management related endpoints')
     .addTag('Orders', 'Order management related endpoints')
+    .addTag('Payments', 'Payments related endpoints')
     .addBearerAuth({
         type: 'http',
         scheme: 'bearer',
