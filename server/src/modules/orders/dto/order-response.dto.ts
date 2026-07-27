@@ -118,12 +118,12 @@ export class OrderResponseDto {
 
 
     @ApiProperty({
-        description: 'Total',
+        description: 'Total Amount',
         example: 49.59,
     })
     @IsNumber({
         maxDecimalPlaces: 2,
-    }, { message: 'Total must be a number' })
+    }, { message: 'Total Amount must be a number' })
     total! : number;
 
 
