@@ -24,7 +24,7 @@ export class CartItemResponseDto {
         description: 'Product Image URL',
         example: 'https://example.com/image.jpg',
     })
-    productImageUrl?: string;
+    productImageUrl!: string | null;
 
     @ApiProperty({
         description: 'Product price',
