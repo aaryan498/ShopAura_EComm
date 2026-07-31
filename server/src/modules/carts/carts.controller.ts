@@ -1,14 +1,16 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CartsService } from './carts.service';
-import { ApiBearerAuth, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags, ApiTooManyRequestsResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiResponse, ApiTags, ApiTooManyRequestsResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { ModerateThrottle } from 'src/common/decorators/custom-throttler.decorator';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
 import { CartApiResponseDto, CartResponseDto } from './dto/cart-response.dto';
+import { Role } from 'src/generated/prisma/enums';
+import { Roles } from 'src/common/decorators/roles.decorator';
 
 @ApiTags('Carts')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(JwtAuthGuard)
 @ApiBearerAuth('JWT-auth')
 @Controller('carts')
 export class CartsController {
@@ -33,25 +35,140 @@ export class CartsController {
         description: 'Too many requests - rate limit exceeded'
     })
     async getCurrentUserCart( @GetUser('id') userId: string ) : Promise<CartApiResponseDto<CartResponseDto>> {
-        return await this.cartsService.getCurrentUserCart(userId);
+        return await this.cartsService.getCurrentCart(userId);
     }
 
 
-    // @Get('user/all')
-    // @ModerateThrottle()
-    // @ApiOperation({
-    //     summary: 'User get their cart history',
-    //     description: 'Returns the authenticated users cart history.'
-    // })
-    // @ApiOkResponse({
-    //     description: 'User get their cart history',
-    //     type: CartApiResponseDto,
-    // })
-    // @ApiForbiddenResponse({
-    //     description: 'Not Authenticated or Admin access required'
-    // })
-    
+    @Get('me/all')
+    @ModerateThrottle()
+    @ApiOperation({
+        summary: 'User get their cart history',
+        description: 'Returns the authenticated users cart history.'
+    })
+    @ApiOkResponse({
+        description: 'User get their cart history',
+        type: CartApiResponseDto,
+    })
+    @ApiForbiddenResponse({
+        description: 'Not Authenticated - access required'
+    })
+    @ApiTooManyRequestsResponse({
+        description: 'Too many requests - rate limit exceeded'
+    })
+    async getCurrentUserCartHistory( @GetUser('id') userId: string ) : Promise<{
+        success: boolean,
+        data: CartResponseDto[],
+        message: string,
+    }> {
+        return await this.cartsService.getAllCart(userId);
+    }
 
+
+
+    @Get('all')
+    @UseGuards(RolesGuard)
+    @Roles(Role.ADMIN)
+    @ModerateThrottle()
+    @ApiOperation({
+        summary: 'Admin get all users cart history',
+        description: 'Returns the authenticated users cart history.'
+    })
+    @ApiOkResponse({
+        description: 'Admin get all users cart history',
+        type: CartApiResponseDto,
+    })
+    @ApiForbiddenResponse({
+        description: 'Not Authenticated - Admin access required'
+    })
+    @ApiTooManyRequestsResponse({
+        description: 'Too many requests - rate limit exceeded'
+    })
+    async getAllUserCarts() : Promise<{
+        success: boolean,
+        data: CartResponseDto[],
+        message: string,
+    }> {
+        return await this.cartsService.getAllCart();
+    }
+
+
+    @Post(':id')
+    @ModerateThrottle()
+    @ApiOperation({
+        summary: "Add product to cart",
+        description: "User Add product to their current cart",
+    })
+    @ApiParam({
+        name: 'id',
+        description: 'Product ID',
+        type: String,
+    })
+    @ApiOkResponse({
+        description: 'Add product to cart',
+        type: CartApiResponseDto,
+    })
+    @ApiForbiddenResponse({
+        description: 'Not Authenticated - User Not found'
+    })
+    @ApiTooManyRequestsResponse({
+        description: 'Too many requests - rate limit exceeded'
+    })
+    async addProductToCart(@GetUser('id') userId: string, @Param('id') productId: string) : Promise<CartApiResponseDto<CartResponseDto>> {
+        return await this.cartsService.addProduct(userId, productId);
+    }
+
+
+
+    @Post(':id')
+    @ModerateThrottle()
+    @ApiOperation({
+        summary: "Increase product quantity in to cart",
+        description: "User increase product quantity into their current cart",
+    })
+    @ApiParam({
+        name: 'id',
+        description: 'Product ID',
+        type: String,
+    })
+    @ApiOkResponse({
+        description: 'Increased product quantity to cart',
+        type: CartApiResponseDto,
+    })
+    @ApiForbiddenResponse({
+        description: 'Not Authenticated - User Not found'
+    })
+    @ApiTooManyRequestsResponse({
+        description: 'Too many requests - rate limit exceeded'
+    })
+    async increaseProductQuantityInCart(@GetUser('id') userId: string, @Param('id') productId: string, quantity: number) : Promise<CartApiResponseDto<CartResponseDto>> {
+        return await this.cartsService.updateCartProductQuantity(userId, productId, quantity);
+    }
+
+
+    @Delete(':id')
+    @ModerateThrottle()
+    @ApiOperation({
+        summary: "Delete product from cart",
+        description: "User delete product from their current cart",
+    })
+    @ApiParam({
+        name: 'id',
+        description: 'Product ID',
+        type: String,
+    })
+    @ApiOkResponse({
+        description: 'Delete product from cart',
+        type: CartApiResponseDto,
+    })
+    @ApiForbiddenResponse({
+        description: 'Not Authenticated - User Not found'
+    })
+    @ApiTooManyRequestsResponse({
+        description: 'Too many requests - rate limit exceeded'
+    })
+    async deleteProductFromCart(@GetUser('id') userId: string, @Param('id') productId: string) : Promise<CartApiResponseDto<CartResponseDto>> {
+        return await this.cartsService.addProduct(userId, productId);
+    }
     
 
 }

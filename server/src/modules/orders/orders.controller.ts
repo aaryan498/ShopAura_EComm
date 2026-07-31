@@ -13,7 +13,7 @@ import { QueryOrderDto } from './dto/query-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
 @ApiTags('Orders')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(JwtAuthGuard)
 @ApiBearerAuth('JWT-auth')
 @Controller('orders')
 export class OrdersController {
@@ -48,6 +48,7 @@ export class OrdersController {
 
 
     @Get('admin/all')
+    @UseGuards(RolesGuard)
     @Roles(Role.ADMIN)
     @RelaxedThrottle()
     @ApiOperation({ summary: '[ADMIN] Get all orders' })
@@ -85,7 +86,6 @@ export class OrdersController {
 
     @Get()
     @RelaxedThrottle()
-    @Roles(Role.USER, Role.ADMIN)
     @ApiOperation({ summary: 'Get all orders for the current user' })
     @ApiQuery({
         name: 'status',
@@ -121,6 +121,7 @@ export class OrdersController {
 
 
     @Get('admin/:id')
+    @UseGuards(RolesGuard)
     @Roles(Role.ADMIN)
     @RelaxedThrottle()
     @ApiOperation({ summary: '[ADMIN] Get a single order by ID' })
@@ -170,6 +171,7 @@ export class OrdersController {
 
 
     @Patch('admin/:id')
+    @UseGuards(RolesGuard)
     @Roles(Role.ADMIN)
     @ModerateThrottle()
     @ApiOperation({
@@ -230,6 +232,7 @@ export class OrdersController {
 
 
     @Delete('admin/:id')
+    @UseGuards(RolesGuard)
     @Roles(Role.ADMIN)
     @ModerateThrottle()
     @ApiOperation({
