@@ -11,23 +11,38 @@
   --background: #c5c5c5ce;
   --foreground: #252525;
 
+  --navbar-background: #b3b3b3;
+  --navbar-foreground: #000000;
+  --navbar-foreground-hover: #252799;
+  --navbar-button-background: #000000;
+  --navbar-button-foreground: #ffffff;
+
+
   --card: #ffffff;
   --card-foreground: #18181b;
 
-  /* --popover: #ffffff;
-  --popover-foreground: #18181b; */
+  --popover: #ffffff;
+  --popover-foreground: #18181b;
 
   --primary: #18181b;
   --primary-foreground: #ffffff;
 
-  /* --secondary: #f4f4f5;
-  --secondary-foreground: #18181b; */
+  --hero-foreground: #ffffff;
 
-  /* --muted: #f4f4f5;
-  --muted-foreground: #71717a; */
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
 
-  --accent: #2563eb;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+
+  --accent: #3c4049;
   --accent-foreground: #ffffff;
+
+  --accent-gradient: linear-gradient(
+    to bottom right,
+    #6366f1,
+    #9333ea
+  );
 
   --success: #16a34a;
   --warning: #ca8a04;
@@ -35,15 +50,12 @@
 
   --border: #e4e4e7;
   --input: #e4e4e7;
-  --ring: #2563eb;
+  --ring: #4d4d4d;
 
-  /* --navbar: #18181b;
-  --navbar-foreground: #fafafa; */
+  --sidebar: #18181b;
+  --sidebar-foreground: #fafafa;
 
-  /* --sidebar: #18181b;
-  --sidebar-foreground: #fafafa; */
-
-  /* --surface: #ffffff; */
+  --surface: #ffffff;
 }
 
 /* ----------------------------- */
@@ -54,7 +66,12 @@
   --background: #18181b;
   --foreground: #fafafa;
 
-  /* --card: #27272a;
+  --navbar-background: #080808;
+  --navbar-foreground: #8a8a8a;
+  --navbar-button-background: #ffffff;
+  --navbar-button-foreground: #000000;
+
+  --card: #27272a;
   --card-foreground: #fafafa;
 
   --popover: #27272a;
@@ -62,6 +79,8 @@
 
   --primary: #fafafa;
   --primary-foreground: #18181b;
+
+  --hero-foreground: #777777;
 
   --secondary: #27272a;
   --secondary-foreground: #fafafa;
@@ -72,21 +91,24 @@
   --accent: #3b82f6;
   --accent-foreground: #ffffff;
 
+  --accent-gradient: linear-gradient(
+    to bottom right,
+    #6366f1,
+    #9333ea
+  );
+
   --success: #22c55e;
   --warning: #facc15;
   --destructive: #ef4444;
 
   --border: #3f3f46;
   --input: #3f3f46;
-  --ring: #60a5fa;
-
-  --navbar: #09090b;
-  --navbar-foreground: #fafafa;
+  --ring: #9c9c9c;
 
   --sidebar: #09090b;
   --sidebar-foreground: #fafafa;
 
-  --surface: #27272a; */
+  --surface: #27272a;
 }
 
 /* ----------------------------- */
@@ -96,12 +118,20 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-navbar-background: var(--navbar-background);
+  --color-navbar-foreground: var(--navbar-foreground);
+  --color-navbar-foreground-hover: var(--navbar-foreground-hover);
+  --color-navbar-button-background: var(--navbar-button-background);
+  --color-navbar-button-foreground: var(--navbar-button-foreground);
   
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+
+  --color-hero-foreground: var(--hero-foreground);
   
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);

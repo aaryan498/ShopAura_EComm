@@ -28,11 +28,11 @@ const Header = () => {
   }, []);
 
   return (
-    <header className='fixed top-0 left-0 right-0 z-50 bg-white shadow-md'>
-      <div className='container mx-auto flex h-16 items-center justify-between px-4 py-3 md:h-20'>
+    <header className='fixed top-0 left-0 right-0 z-50 bg-navbar-background shadow-md'>
+      <div className='mx-auto flex h-16 items-center justify-between px-4 py-3 md:h-20'>
         {/* Logo */}
-        <Link href='/' className='text-2xl font-bold text-gray-900 md:text-3xl'>
-          Shop <span className='text-indigo-600'>Aura</span>
+        <Link href='/' className='text-2xl font-bold text-navbar-foreground md:text-3xl'>
+          Shop<span className='text-indigo-600'>Aura</span>
         </Link>
 
         {/* Desktop Navigation (hidden on mobile) */}
@@ -42,17 +42,17 @@ const Header = () => {
             <input
               type='text'
               placeholder='Search...'
-              className='rounded-full border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'
+              className='rounded-full border bg-input border-navbar-foreground text-navbar-foreground px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring'
             /> 
             <FiSearch className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400' size={18} />
           </div>
-          <Link href='/categories' className='text-gray-700 hover:text-indigo-600 transition-colors duration-200'>
+          <Link href='/categories' className='text-navbar-foreground hover:text-navbar-foreground-hover transition-colors duration-200'>
             Categories
           </Link>
-          <Link href='/deals' className='text-gray-700 hover:text-indigo-600 transition-colors duration-200'>
+          <Link href='/deals' className='text-navbar-foreground hover:text-navbar-foreground-hover transition-colors duration-200'>
             Deals
           </Link>
-          <Link href='/about' className='text-gray-700 hover:text-indigo-600 transition-colors duration-200'>
+          <Link href='/about' className='text-navbar-foreground hover:text-navbar-foreground-hover transition-colors duration-200'>
             About
           </Link>
         </nav>
@@ -64,15 +64,18 @@ const Header = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className='flex items-center gap-1 text-gray-700 hover:text-indigo-600 transition-colors duration-200'
+                className='relative flex bg-navbar-button-background px-4 py-2 items-center gap-1 text-navbar-button-foreground hover:text-navbar-foreground-hover transition-colors duration-200 cursor-pointer'
               >
                 <FiShoppingCart size={20} />
                 Cart
+                <div className='absolute -top-2 -right-2 bg-black text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold'>
+                  3 {/* Hardcoded item count */}
+                </div>
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className='flex items-center gap-1 text-gray-700 hover:text-indigo-600 transition-colors duration-200'
+                className='flex bg-navbar-button-background px-4 py-2 items-center gap-1 text-navbar-button-foreground hover:text-navbar-foreground-hover transition-colors duration-200 cursor-pointer'
                 onClick={() => setIsAuthenticated(false)} // Simulate logout
               > 
                 <FiUser size={20} />
@@ -83,7 +86,7 @@ const Header = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className='flex items-center gap-1 text-indigo-600 border border-indigo-600 px-4 py-2 rounded-full hover:bg-indigo-600 hover:text-white transition-colors duration-200'
+              className='flex items-center gap-1 text-indigo-600 border border-indigo-600 px-4 py-2 hover:bg-indigo-600 hover:text-white transition-colors duration-200'
               onClick={() => setIsAuthenticated(true)} // Simulate login
             > 
               <FiUser size={20} />
@@ -98,12 +101,12 @@ const Header = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className='text-gray-700 hover:text-indigo-600'
+              className='text-navbar-foreground hover:text-indigo-600'
             >
               <FiShoppingCart size={24} />
             </motion.button>
           )}
-          <button onClick={toggleMenu} className='text-gray-700 hover:text-indigo-600'> 
+          <button onClick={toggleMenu} className='text-navbar-foreground hover:text-indigo-600'> 
             {isMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
           </button>
         </div>

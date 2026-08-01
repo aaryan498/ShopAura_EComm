@@ -7,8 +7,9 @@ import PromotionalBanner from "@/components/modules/landing/PromotionalBanner";
 import Testimonials from "@/components/modules/landing/Testimonials";
 import BrandLogos from "@/components/modules/landing/BrandLogos";
 import ValueProposition from "@/components/modules/landing/ValueProposition";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata : Metadata = {
   title: "Home | ShopAura Online Shopping",
   description: "ShopAura Home Page",
 };
@@ -18,6 +19,7 @@ export default function Home() {
   return (
     <>
       <Header />
+
       <main className="pt-16 md:pt-20"> {/* Added padding-top to account for fixed header height */}
         <HeroSection/>
         <FeaturedCategories/>
@@ -27,6 +29,7 @@ export default function Home() {
         <BrandLogos/>
         <ValueProposition/>
       </main>
+      
       <Footer />
     </>
   );
