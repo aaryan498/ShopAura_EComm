@@ -12,7 +12,7 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 @ApiTags('Carts')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth('JWT-auth')
-@Controller('carts')
+@Controller('Carts')
 export class CartsController {
 
     constructor( private readonly cartsService : CartsService ) {}

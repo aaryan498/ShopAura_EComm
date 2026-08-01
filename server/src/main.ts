@@ -41,6 +41,7 @@ async function bootstrap() {
     .addTag('Products', 'Product management related endpoints')
     .addTag('Orders', 'Order management related endpoints')
     .addTag('Payments', 'Payments related endpoints')
+    .addTag('Carts', 'Cart related endpoints')
     .addBearerAuth({
         type: 'http',
         scheme: 'bearer',
