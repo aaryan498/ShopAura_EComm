@@ -1,8 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { persistReducer }from "redux-persist";
-import persistStore from "redux-persist/es/persistStore";
+import { persistReducer, persistStore }from "redux-persist";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
+import authReducer from '../slices/authSlice';
+import cartReducer from '../slices/cartSlice';
+
+
 
 
 const createNoopStorage = () => {
@@ -29,7 +32,10 @@ const persistConfig = {
     storage,
     whitelist: [],
 }
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+    auth: authReducer,
+    cart: cartReducer,
+});
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
     reducer: persistedReducer,

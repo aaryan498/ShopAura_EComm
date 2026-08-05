@@ -4,12 +4,28 @@ import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiShoppingCart, FiMenu, FiX, FiUser, FiSearch } from 'react-icons/fi'; // Using Feather Icons for a similar style
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+
 
 
 const Header = () => {
+
+  const { isAuthenticated, isLoading, user, logout, } = useAuth();
+  const router = useRouter();
+
+  const handleDashboardClick = () => {
+    if(user && user.role === "ADMIN"){
+      router.push('/admin');
+    }
+    else{
+      router.push('/user');
+    }
+  }
+
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // Hardcoded authentication state for now. This will be replaced by Redux logic later.
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // Set to true for testing authenticated view
 
   // Toggle mobile menu
   const toggleMenu = () => {
@@ -76,6 +92,7 @@ const Header = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className='flex bg-navbar-button-background px-4 py-2 items-center gap-1 text-navbar-button-foreground hover:text-navbar-foreground-hover transition-colors duration-200 cursor-pointer'
+                disabled={isLoading}
                 onClick={() => setIsAuthenticated(false)} // Simulate logout
               > 
                 <FiUser size={20} />
