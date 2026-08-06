@@ -1,3 +1,4 @@
+import { Category } from "./category.types";
 
 export interface Product {
     id: string,
@@ -7,7 +8,7 @@ export interface Product {
     stock: number,
     sku: string,
     imageUrl: string,
-    category: string,
+    category: Category,
     rating?: number;
     reviews?: number;
 }

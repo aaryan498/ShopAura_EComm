@@ -20,7 +20,7 @@ const ProductCard = ({ product, isAdmin }: { product: Product, isAdmin: boolean 
       whileHover={{ scale: 1.03, boxShadow: "0 10px 25px rgba(0,0,0,0.1)" }} // Subtle lift and shadow on hover
       className="bg-card rounded-lg shadow-md overflow-hidden border border-border flex flex-col group" // Added 'group' for potential nested hover effects
     >
-      <Link href={`/products/${product.id}`} className="block relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-700"> {/* Adjusted height, added bg for loading state */}
+      <Link href={`/${product.id}`} className="block relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-700"> {/* Adjusted height, added bg for loading state */}
         <Image
           src={product.imageUrl}
           alt={product.name}
@@ -63,7 +63,7 @@ const ProductCard = ({ product, isAdmin }: { product: Product, isAdmin: boolean 
           )}
           {product.category && (
             <span className="inline-block bg-muted text-muted-foreground px-2 py-1 rounded-full text-xs font-medium mt-2 mr-2">
-              {product.category}
+              {product.category.name}
             </span>
           )}
           {isAdmin && product.sku && (

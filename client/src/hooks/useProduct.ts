@@ -6,6 +6,7 @@ import { useCallback, useState } from 'react';
 export function useProduct(){
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState<Product[]>([]);
+    const [product, setProduct] = useState<Product | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [meta, setMeta] = useState<PaginationMeta>({
         total: 0,
@@ -36,11 +37,36 @@ export function useProduct(){
         }, []
     )
 
+    const getProduct = useCallback(async (productId: string): Promise<Product | null> => {
+        if(!productId) return null;
+
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const response = await ProductService.getProductById(productId);
+            if(response){
+                setProduct(response);
+                return response;
+            }
+            throw new Error("Product not Found");
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "failed to fetch product: " + error;
+            setError(message);
+            return null;
+        }
+        finally{
+            setIsLoading(false);
+        }
+    }, [])
+
     return {
         isLoading,
         products,
         error,
         meta,
         getProducts,
+        getProduct,
+        product,
     }
 }
