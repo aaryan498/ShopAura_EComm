@@ -2,16 +2,18 @@
 
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, scale } from 'framer-motion';
 import { FiShoppingCart, FiMenu, FiX, FiUser, FiSearch } from 'react-icons/fi'; // Using Feather Icons for a similar style
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import { useCart } from '@/hooks/useCart';
 
 
 
 const Header = () => {
 
   const { isAuthenticated, isLoading, user, logout, } = useAuth();
+  const { totalItems } = useCart();
   const router = useRouter();
 
   const handleDashboardClick = () => {
@@ -23,9 +25,16 @@ const Header = () => {
     }
   }
 
+  const handleLogoutClick = async () => {
+    await logout();
+  }
 
+  const handleLoginClick = () => {
+    router.push('/login');
+  }
+
+  // For Phone
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // Hardcoded authentication state for now. This will be replaced by Redux logic later.
 
   // Toggle mobile menu
   const toggleMenu = () => {
@@ -47,9 +56,14 @@ const Header = () => {
     <header className='fixed top-0 left-0 right-0 z-50 bg-navbar-background shadow-md'>
       <div className='mx-auto flex h-16 items-center justify-between px-4 py-3 md:h-20'>
         {/* Logo */}
-        <Link href='/' className='text-2xl font-bold text-navbar-foreground md:text-3xl'>
-          Shop<span className='text-indigo-600'>Aura</span>
-        </Link>
+        <motion.div
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ opacity: 0.8 }}
+        >
+          <Link href='/' className='text-2xl font-bold text-navbar-foreground md:text-3xl'>
+            Shop<span className='text-indigo-600'>Aura</span>
+          </Link>
+        </motion.div>
 
         {/* Desktop Navigation (hidden on mobile) */}
         <nav className='hidden md:flex items-center space-x-6'>
@@ -85,15 +99,15 @@ const Header = () => {
                 <FiShoppingCart size={20} />
                 Cart
                 <div className='absolute -top-2 -right-2 bg-black text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold'>
-                  3 {/* Hardcoded item count */}
+                  { totalItems } {/* Hardcoded item count */}
                 </div>
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className='flex bg-navbar-button-background px-4 py-2 items-center gap-1 text-navbar-button-foreground hover:text-navbar-foreground-hover transition-colors duration-200 cursor-pointer'
-                disabled={isLoading}
-                onClick={() => setIsAuthenticated(false)} // Simulate logout
+                disabled={ isLoading }
+                onClick={ handleLogoutClick }
               > 
                 <FiUser size={20} />
                 Log Out
@@ -104,7 +118,7 @@ const Header = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className='flex items-center gap-1 text-indigo-600 border border-indigo-600 px-4 py-2 hover:bg-indigo-600 hover:text-white transition-colors duration-200'
-              onClick={() => setIsAuthenticated(true)} // Simulate login
+              onClick={ handleLoginClick }
             > 
               <FiUser size={20} />
               Login
@@ -177,7 +191,7 @@ const Header = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className='flex items-center gap-2 text-gray-700 hover:text-indigo-600 transition-colors duration-200'
-                    onClick={() => { setIsAuthenticated(false); toggleMenu(); }} // Simulate logout and close menu
+                    onClick={() => { handleLogoutClick(); toggleMenu(); }} // Simulate logout and close menu
                   > 
                     <FiUser size={20} />
                     Log Out
@@ -188,7 +202,7 @@ const Header = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className='flex items-center gap-2 text-indigo-600 border border-indigo-600 px-4 py-2 rounded-full hover:bg-indigo-600 hover:text-white transition-colors duration-200'
-                  onClick={() => { setIsAuthenticated(true); toggleMenu(); }} // Simulate login and close menu
+                  onClick={() => { handleLoginClick(); toggleMenu(); }} // Simulate login and close menu
                   > 
                     <FiUser size={20} />
                   Login

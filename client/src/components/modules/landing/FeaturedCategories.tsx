@@ -4,22 +4,17 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image'; // Assuming Next.js Image component is available
+import { Category } from '@/types/category.types';
 
 // Placeholder data for categories
 const categories = [
-  { name: 'Electronics', image: '/images/categories/electronics.jpg', href: '/categories/electronics' },
-  { name: 'Apparel', image: '/images/categories/apparel.jpg', href: '/categories/apparel' },
-  { name: 'Home Goods', image: '/images/categories/home-goods.jpg', href: '/categories/home-goods' },
-  { name: 'Books', image: '/images/categories/books.jpg', href: '/categories/books' },
+  { name: 'Electronics', image: 'https://www.electronicsforyou.biz/wp-content/uploads/2019/08/Consumer-Electronics-Appliance_Sept-19.jpg', href: '/categories/electronics' },
+  { name: 'Apparel', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZL-lfT5ZgEywUlO-mUe1xgE_tdZHuQyXI-0tWoEBncufJQIj6uRAe564n&s=10', href: '/categories/apparel' },
+  { name: 'Home Goods', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyKOIsBdYIvO3ezDl_eAzzB5tYVoId8ZSuRy2iD4Y5MyGD7BI_yyRfjuKi&s=10', href: '/categories/home-goods' },
+  { name: 'Books', image: 'https://images.theconversation.com/files/45159/original/rptgtpxd-1396254731.jpg?ixlib=rb-4.1.1&q=45&auto=format&w=754&fit=clip', href: '/categories/books' },
 ];
 
-// Pre-create placeholder images in public/images/categories
-// For example:
-// public/images/categories/electronics.jpg
-// public/images/categories/apparel.jpg
-// public/images/categories/home-goods.jpg
-// public/images/categories/books.jpg
-
+// const FeaturedCategories = ({ categories } : { categories: Category[] }) => {
 const FeaturedCategories = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -56,7 +51,12 @@ const FeaturedCategories = () => {
           viewport={{ once: true, amount: 0.2 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {categories.map((category, index) => (
+          {categories.map((category, index) => {
+          
+            console.log(category.name, category.image);
+
+          return (
+            
             <motion.div
               key={category.name}
               variants={itemVariants}
@@ -73,7 +73,7 @@ const FeaturedCategories = () => {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black opacity-60 flex items-center justify-center">
                     <h3 className="text-xl font-semibold text-white group-hover:text-indigo-200 transition-colors duration-300">
                       {category.name}
                     </h3>
@@ -81,7 +81,8 @@ const FeaturedCategories = () => {
                 </div>
               </Link>
             </motion.div>
-          ))}
+            
+          )})}
         </motion.div>
       </div>
     </section>

@@ -12,7 +12,7 @@ import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagg
 @Controller('auth')
 export class AuthController {
 
-    constructor(private readonly authService: AuthService) {}
+    constructor(private readonly AuthService: AuthService) {}
 
 
 
@@ -42,7 +42,7 @@ export class AuthController {
         description: "Too Many Requests. Rate limit exceeded",
     })
     async register(@Body() registerDto : RegisterDto) : Promise<AuthResponseDto> {
-        return await this.authService.register(registerDto);
+        return await this.AuthService.register(registerDto);
     }
 
 
@@ -78,7 +78,7 @@ export class AuthController {
         description: "Too Many Requests. Rate limit exceeded",
     })
     async refreshTokens(@GetUser('id') userId : string) : Promise<AuthResponseDto> {
-        return await this.authService.refreshTokens(userId);
+        return await this.AuthService.refreshTokens(userId);
     }
 
 
@@ -111,7 +111,7 @@ export class AuthController {
         description: "Too Many Requests. Rate limit exceeded",
     })
     async login(@Body() loginDto: LoginDto) : Promise<AuthResponseDto> {
-        return await this.authService.login(loginDto);
+        return await this.AuthService.login(loginDto);
     }
 
 
@@ -140,7 +140,7 @@ export class AuthController {
         description: "Too Many Requests. Rate limit exceeded",
     })
     async logout(@GetUser('id') userId : string) : Promise<{ message: string }> {
-        await this.authService.logout(userId);
+        await this.AuthService.logout(userId);
         return {
             message: "Logged out successfully"
         };

@@ -22,8 +22,9 @@ export default function Home() {
 
       <main className="pt-16 md:pt-20"> {/* Added padding-top to account for fixed header height */}
         <HeroSection/>
-        <FeaturedCategories/>
-        <ProductGrid title={"Our Products"}/>
+        {/* <FeaturedCategories categories={categories}/> */}
+        <FeaturedCategories />
+        <ProductGrid title={"Featured Products"}/>
         <PromotionalBanner/>
         <Testimonials/>
         <BrandLogos/>

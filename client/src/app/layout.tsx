@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
-    <html lang="en" className={`${poppins.variable} dark antialiased`} >
+    <html lang="en" className={`${poppins.variable}  antialiased`} >
       <body className="min-h-screen flex flex-col">
         <Providers>{children}</Providers>
       </body>
