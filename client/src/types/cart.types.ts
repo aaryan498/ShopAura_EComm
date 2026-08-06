@@ -8,7 +8,10 @@ export interface CartItem {
     cartId: string,
     productId: string,
     quantity: number,
+    price: number,
     product: Product,
+    createdAt: string,
+    updatedAt: string,
 }
 
 export interface CartState {

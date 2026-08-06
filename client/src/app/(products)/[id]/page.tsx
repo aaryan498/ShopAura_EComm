@@ -26,12 +26,12 @@ interface PageProps {
 
 const page = async ({ params }: PageProps) => {
 
-    // const {id} = params;
+    const { id } = await params;
     return (
         <>
             <Header />
             <main className="pt-24 md:pt-28"> {/* Adjusted padding to account for fixed header */}
-                <ProductDetailClient productId={params.id} />
+                <ProductDetailClient productId={ id } />
             </main>
             <Footer />
         </>

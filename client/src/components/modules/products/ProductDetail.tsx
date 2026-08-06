@@ -5,8 +5,11 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMinus, FiPlus, FiShoppingCart, FiStar } from 'react-icons/fi';
 import { Product } from '@/types/product.types';
+import { useCart } from '@/hooks/useCart';
 
 const ProductDetail = ({ product }: { product: Product }) => {
+
+    const { addProductToCart } = useCart();
 
     // const product = {
     //     id: '1',
@@ -17,7 +20,10 @@ const ProductDetail = ({ product }: { product: Product }) => {
     //     sku: "123456",
     //     imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e',
     //     rating: 4.5,
-    //     reviews: 120
+    //     reviews: 120,
+    //     category: {
+    //         name: "clothing",
+    //     }
     // };
 
     const [mainImage, setMainImage] = useState<string | null>(null);
@@ -38,6 +44,21 @@ const ProductDetail = ({ product }: { product: Product }) => {
             }
         }
     };
+
+    const handleAddToCart = async () => {
+        if(isInStock){
+            addProductToCart({
+                ...product,
+                quantity,
+            });
+
+
+            setQuantity(1);
+            alert(`Added ${quantity} ${product.name} to cart.`);
+        }
+    }
+
+    const isInStock = quantity <= product.stock;
 
     // const displayImages = product.images && product.images.length > 0 ? product.images : [product.imageUrl];
 
@@ -151,6 +172,8 @@ const ProductDetail = ({ product }: { product: Product }) => {
                         <motion.button
                             whileHover={{ scale: 1.03, boxShadow: "0 8px 20px rgba(0,0,0,0.2)" }}
                             whileTap={{ scale: 0.97 }}
+                            onClick={handleAddToCart}
+                            disabled={!isInStock}
                             className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 shadow-md"
                         >
                             <FiShoppingCart size={20} />

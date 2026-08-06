@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { FiShoppingCart, FiStar, FiMinus, FiPlus } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import ProductDetail from './ProductDetail';
+import SimilarProducts from './SimilarProducts';
 
 const ProductDetailClient = ({ productId }: { productId: string }) => {
 
@@ -57,7 +58,8 @@ const ProductDetailClient = ({ productId }: { productId: string }) => {
                 categoryName={product.category.name}
                 categoryId={product.category.id}
             />
-            <ProductDetail product={product}/>      
+            <ProductDetail product={product}/>
+            <SimilarProducts category={product.category} productId={product.id}/>   
         </motion.div>
     );
 };
