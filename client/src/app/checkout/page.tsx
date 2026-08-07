@@ -15,15 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const page = async () => {
-  return (
-    <>
-      <Header/>
-      <main className="pt-16 md:pt-20" >
-        <CheckOutClient/>
-      </main>
-      <Footer/>
-    </>
-  );
+  return <CheckOutClient/>
+
 };
 
 export default page;

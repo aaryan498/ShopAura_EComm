@@ -30,7 +30,7 @@ const Header = () => {
   }
 
   const handleLoginClick = () => {
-    router.push('/login');
+    router.push('/auth/login');
   }
 
   // For Phone

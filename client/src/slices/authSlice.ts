@@ -1,4 +1,4 @@
-import { AuthState, User } from "@/types/auth.types";
+import { AuthResponse, AuthState, User } from "@/types/auth.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
@@ -23,8 +23,20 @@ const authSlice = createSlice({
             state.user = null;
             state.isAuthenticated = false;
         },
+        setUser(state, action: PayloadAction<{ 
+            accessToken: string, 
+            refreshToken: string, 
+            user: User
+         }>){
+            const { accessToken, refreshToken, user } = action.payload;
+
+            state.accessToken = accessToken;
+            state.refreshToken = refreshToken;
+            state.user = user;
+            state.isAuthenticated = true;
+        }
     },
 })
 
-export const {setAccessToken, clearAuth} = authSlice.actions;
+export const {setAccessToken, clearAuth, setUser} = authSlice.actions;
 export default authSlice.reducer;

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { config } from "process";
 import { SiAxios } from "react-icons/si";
-import { authService } from "./auth.service";
+import { AuthService } from "./auth.service";
 import { store } from "@/store";
 import { clearAuth, setAccessToken } from "@/slices/authSlice";
 
@@ -40,7 +40,7 @@ apiClient.interceptors.response.use(
             const refreshToken = state.auth.refreshToken;
 
             if(refreshToken){
-                const newAccessToken = await authService.refreshToken(refreshToken);
+                const newAccessToken = await AuthService.refreshToken(refreshToken);
                 if(newAccessToken){
                     store.dispatch(setAccessToken(newAccessToken));
                     originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;

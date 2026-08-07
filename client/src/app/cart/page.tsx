@@ -1,4 +1,4 @@
-import CheckOutClient from '@/components/modules/checkout/CheckOutClient';
+import CartClient from '@/components/modules/cart/CartClient';
 import Footer from '@/components/modules/landing/Footer';
 import Header from '@/components/modules/landing/Header';
 import type { Metadata } from 'next';
@@ -16,7 +16,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const page = async () => {
     return (
-        <CheckOutClient/>
+        <>
+            <Header/>
+            <main className="pt-16 md:pt-20" >
+                <CartClient/>
+            </main>
+            <Footer/>
+        </>
     );
 };
 

@@ -1,7 +1,12 @@
+import { AuthResponse, LoginCredentials } from "@/types/auth.types";
 import { apiClient } from "./axios.config";
 
-export const authService = {
+export const AuthService = {
 
+    login: async(credentials: LoginCredentials): Promise<AuthResponse> => {
+        const response = await apiClient.post<AuthResponse>('/auth/login', credentials);
+        return response.data;
+    },
     logout: async(): Promise<void> => {
         try {
             await apiClient.post('/auth/logout');

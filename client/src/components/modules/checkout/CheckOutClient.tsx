@@ -35,11 +35,11 @@ const CheckOutClient = () => {
         setStripeError(null);
     }
 
-    useEffect(()=>{
-        if(items.length === 0 && !orderId){ // Only redirect if cart is empty AND no order has been created yet
-            router.push("/cart");
-        }
-    }, [orderId, items, router]);
+    // useEffect(()=>{
+    //     if(items.length === 0 && !orderId){ // Only redirect if cart is empty AND no order has been created yet
+    //         router.push("/cart");
+    //     }
+    // }, [orderId, items, router]);
 
     const shippingCost = totalPrice > 400 ? 0 : 30;
     const finalTotal = totalPrice + shippingCost;
@@ -183,6 +183,8 @@ const CheckOutClient = () => {
     //                         </div>
 
     <section className="min-h-[calc(100vh-10rem)] bg-background text-foreground">
+      <div className="max-w-[900px] m-auto">
+
       <CheckOutHeader />
       <CheckOutSteps currentStep={currentStep} />
 
@@ -293,6 +295,7 @@ const CheckOutClient = () => {
             </button>
           </div>
         )}
+      </div>
       </div>
     </section>
   );
