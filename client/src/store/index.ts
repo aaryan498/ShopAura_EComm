@@ -30,7 +30,7 @@ const storage =
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: [],
+    whitelist: ["cart"],
 }
 const rootReducer = combineReducers({
     auth: authReducer,

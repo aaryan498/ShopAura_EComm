@@ -57,9 +57,70 @@ const cartSlice = createSlice({
             const totals = calculateTotals(state.items);
             state.totalItems = totals.totalItems;
             state.totalPrice = totals.totalPrice;
+        },
+
+        incrementProductQuantity: (state, action: PayloadAction<string>) => {
+            const productId = action.payload;
+
+            const existingItem = state.items.find((item) => item.product.id === productId);
+
+            if(existingItem && existingItem.quantity < existingItem.product.stock){
+                existingItem.quantity++;
+
+                const totals = calculateTotals(state.items);
+                state.totalItems = totals.totalItems;
+                state.totalPrice = totals.totalPrice;
+            } 
+        },
+
+        decrementProductQuantity: (state, action: PayloadAction<string>) => {
+            const productId = action.payload;
+
+            const existingItem = state.items.find((item)=> item.product.id === productId);
+
+            if(existingItem){
+                if(existingItem.quantity <= 1){
+                    state.items = state.items.filter((item) => item.product.id !== productId);
+                }
+                else{
+                    existingItem.quantity--;
+                }
+
+                const totals = calculateTotals(state.items);
+                state.totalItems = totals.totalItems;
+                state.totalPrice = totals.totalPrice;
+            }
+        },
+
+        removeProductFromCart: (state, action: PayloadAction<string>) => {
+
+            const productId = action.payload;
+
+            const existingItem = state.items.find((item) => item.product.id === productId);
+            
+            if(existingItem){
+                state.items.filter((item) => item.product.id !== productId);
+
+                const totals = calculateTotals(state.items);
+                state.totalItems = totals.totalItems;
+                state.totalPrice = totals.totalPrice;
+            }
+        },
+
+        clearCart: (state) =>{
+            state.items = [];
+            state.totalItems = 0;
+            state.totalPrice = 0;
         }
     },
 })
 
-export const { addToCart } = cartSlice.actions;
+export const { 
+    addToCart, 
+    incrementProductQuantity, 
+    decrementProductQuantity, 
+    removeProductFromCart, 
+    clearCart 
+} = cartSlice.actions;
+
 export default cartSlice.reducer;

@@ -47,7 +47,7 @@ const ProductDetailClient = ({ productId }: { productId: string }) => {
 
     
     return (
-        <motion.div
+        <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -60,7 +60,7 @@ const ProductDetailClient = ({ productId }: { productId: string }) => {
             />
             <ProductDetail product={product}/>
             <SimilarProducts category={product.category} productId={product.id}/>   
-        </motion.div>
+        </motion.section>
     );
 };
 

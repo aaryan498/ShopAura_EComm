@@ -20,3 +20,10 @@ export interface CartState {
     totalPrice: number,
 
 }
+
+
+export interface CartResponse {
+    success: boolean;
+    message: string;
+    data?: unknown;
+}

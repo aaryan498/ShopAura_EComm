@@ -9,7 +9,6 @@ export class OrderApiResponseDto<T> {
         description: 'Indicates whether the request was successful or not',
         example: true
     })
-    @IsBoolean({ message: 'Success must be a boolean' })
     success! : boolean;
 
     @ApiProperty({
@@ -24,8 +23,6 @@ export class OrderApiResponseDto<T> {
         nullable: true,
         required: false,
     })
-    @IsOptional()
-    @IsString({ message: 'Message must be a string' })
     message? : string;
 
 

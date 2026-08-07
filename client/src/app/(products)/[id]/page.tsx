@@ -1,6 +1,6 @@
 import Footer from '@/components/modules/landing/Footer';
 import Header from '@/components/modules/landing/Header';
-import ProductDetailClient from '@/components/modules/products/ProductDetailClient';
+import ProductDetailClient from '@/components/modules/product/ProductDetailClient';
 import type { Metadata } from 'next';
 // import { useParams } from 'next/navigation';
 import React from 'react'; 
@@ -13,10 +13,7 @@ export const revalidate = false;
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
     return {
         title: 'Product',
-        description: 'Product Description',
-        icons: {
-            icon: '/assets/icons/favicon.ico',
-        },
+        description: 'Product Description'
     };
 }
 
@@ -30,7 +27,7 @@ const page = async ({ params }: PageProps) => {
     return (
         <>
             <Header />
-            <main className="pt-24 md:pt-28"> {/* Adjusted padding to account for fixed header */}
+            <main className="pt-16 md:pt-20"> {/* Adjusted padding to account for fixed header */}
                 <ProductDetailClient productId={ id } />
             </main>
             <Footer />

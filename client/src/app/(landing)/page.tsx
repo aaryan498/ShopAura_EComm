@@ -8,6 +8,7 @@ import Testimonials from "@/components/modules/landing/Testimonials";
 import BrandLogos from "@/components/modules/landing/BrandLogos";
 import ValueProposition from "@/components/modules/landing/ValueProposition";
 import { Metadata } from "next";
+import MainClient from "@/components/modules/landing/MainClient";
 
 export const metadata : Metadata = {
   title: "Home | ShopAura Online Shopping",
@@ -20,15 +21,9 @@ export default function Home() {
     <>
       <Header />
 
-      <main className="pt-16 md:pt-20"> {/* Added padding-top to account for fixed header height */}
-        <HeroSection/>
-        {/* <FeaturedCategories categories={categories}/> */}
-        <FeaturedCategories />
-        <ProductGrid title={"Featured Products"}/>
-        <PromotionalBanner/>
-        <Testimonials/>
-        <BrandLogos/>
-        <ValueProposition/>
+      {/* Added padding-top to account for fixed header height */}
+      <main className="pt-16 md:pt-20"> 
+        <MainClient/>
       </main>
       
       <Footer />

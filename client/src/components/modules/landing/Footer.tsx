@@ -110,7 +110,7 @@ const Footer = () => {
             />
             <motion.button
               type='submit'
-              className='bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-200 whitespace-nowrap'
+              className='cursor-pointer bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-200 whitespace-nowrap'
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
