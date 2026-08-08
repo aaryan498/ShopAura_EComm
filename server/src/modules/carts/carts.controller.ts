@@ -173,6 +173,32 @@ export class CartsController {
     async deleteProductFromCart(@GetUser('id') userId: string, @Param('id') productId: string) : Promise<CartApiResponseDto<CartResponseDto>> {
         return await this.cartsService.removeProduct(userId, productId);
     }
+
+
+    @Delete()
+@ModerateThrottle()
+@ApiOperation({
+    summary: "Clear user's current cart",
+    description: "Removes all products from the authenticated user's current cart and restores their stock.",
+})
+@ApiOkResponse({
+    description: 'Cart cleared successfully',
+    type: CartApiResponseDto,
+})
+@ApiNotFoundResponse({
+    description: 'Active cart not found',
+})
+@ApiForbiddenResponse({
+    description: 'Not Authenticated - User not found',
+})
+@ApiTooManyRequestsResponse({
+    description: 'Too many requests - rate limit exceeded',
+})
+async clearCart(
+    @GetUser('id') userId: string,
+): Promise<CartApiResponseDto<CartResponseDto>> {
+    return await this.cartsService.clearCart(userId);
+}
     
 
 }
