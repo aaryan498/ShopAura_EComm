@@ -25,6 +25,10 @@ const Header = () => {
     }
   }
 
+  const handleCartClick = () => {
+    router.push('/cart');
+  }
+
   const handleLogoutClick = async () => {
     await logout();
   }
@@ -94,6 +98,7 @@ const Header = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={handleCartClick}
                 className='relative flex bg-navbar-button-background px-4 py-2 items-center gap-1 text-navbar-button-foreground hover:text-navbar-foreground-hover transition-colors duration-200 cursor-pointer'
               >
                 <FiShoppingCart size={20} />

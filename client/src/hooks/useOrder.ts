@@ -24,14 +24,17 @@ export function useOrder() {
 
             try{
 
-                if(guestCart.length > 0){
-                    await CartService.mergeCart(
-                        guestCart.map((item) => ({
-                            productId: item.product.id,
-                            quantity: item.quantity,
-                        }))
-                    );
-                }
+                // if(guestCart.length > 0){
+                //     await CartService.mergeCart(
+                //         guestCart.map((item) => ({
+                //             productId: item.productId,
+                //             price: item.product.price,
+                //             quantity: item.quantity,
+                //         }))
+                //     );
+                // }
+
+                console.log(data);
 
                 const response = await OrderService.createOrder(data);
 

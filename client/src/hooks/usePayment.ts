@@ -12,7 +12,7 @@ export function usePayment() {
 
     const createPaymentIntent = useCallback(
         async (data: CreatePaymentIntentRequest): Promise<boolean> =>{
-
+            console.log("Creating Payment Intent");
             setIsLoading(true);
             setError(null);
 

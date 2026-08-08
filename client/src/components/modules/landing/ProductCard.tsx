@@ -6,9 +6,18 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FiShoppingCart, FiStar } from 'react-icons/fi';
 import { Product } from '@/types/product.types';
+import { useCart } from '@/hooks/useCart';
+
+
 
 
 const ProductCard = ({ product, isAdmin }: { product: Product, isAdmin: boolean }) => {
+
+  const { addProductToCart } = useCart();
+
+  const handleAddToCart = async (product: Product) => {
+    await addProductToCart(product);
+  }
 
 
   return (
@@ -84,6 +93,7 @@ const ProductCard = ({ product, isAdmin }: { product: Product, isAdmin: boolean 
             whileTap={{ scale: 0.95 }}
             className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-200 flex items-center gap-2 text-sm" // Changed to rounded-md, added text, gap, and smaller text
             aria-label={`Add ${product.name} to cart`}
+            onClick={() => handleAddToCart(product)}
           >
             <FiShoppingCart size={20} />
             <span className="hidden sm:inline">Add to Cart</span> {/* Hidden on small screens, visible on sm and up */}

@@ -99,7 +99,7 @@ const cartSlice = createSlice({
             const existingItem = state.items.find((item) => item.product.id === productId);
             
             if(existingItem){
-                state.items.filter((item) => item.product.id !== productId);
+                state.items = state.items.filter((item) => item.product.id !== productId);
 
                 const totals = calculateTotals(state.items);
                 state.totalItems = totals.totalItems;

@@ -21,65 +21,10 @@ const CartClient = () => {
     const router = useRouter();
 
     // Dummy data for demonstration purposes
+
     useEffect(() => {
-        const electronicsCategory: Category = {
-            id: 'cat1',
-            name: 'Electronics',
-            description: 'Gadgets and electronic devices.',
-            imageUrl: null,
-            slug: 'electronics',
-            isActive: true,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-        };
-
-        const wearablesCategory: Category = {
-            id: 'cat2',
-            name: 'Wearables',
-            description: 'Smart devices you can wear.',
-            imageUrl: null,
-            slug: 'wearables',
-            isActive: true,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-        };
-
-        const accessoriesCategory: Category = {
-            id: 'cat3',
-            name: 'Accessories',
-            description: 'Fashion and utility accessories.',
-            imageUrl: null,
-            slug: 'accessories',
-            isActive: true,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-        };
-
-        const dummyProducts: Product[] = [
-            {
-                id: 'prod1', name: 'Wireless Bluetooth Headphones', quantity: 20, price: 129.99, description: 'High-fidelity audio with active noise cancellation.', stock: 50, sku: 'WH-1000XM4', imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=300&q=80', category: electronicsCategory, rating: 4.5, reviews: 120,
-            },
-            {
-                id: 'prod2', name: 'Smartwatch with Heart Rate Monitor', quantity: 20, price: 199.99, description: 'Track your fitness and stay connected on the go.', stock: 30, sku: 'SMART-WATCH-V2', imageUrl: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=300&q=80', category: wearablesCategory, rating: 4.2, reviews: 85,
-            },
-            {
-                id: 'prod3', name: 'Premium Leather Wallet', quantity: 20, price: 49.99, description: 'Handcrafted from genuine leather with RFID protection.', stock: 100, sku: 'LEATHER-WALLET-001', imageUrl: 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=300&q=80', category: accessoriesCategory, rating: 4.8, reviews: 210,
-            },
-        ];
-
-        const dummyCartItems: CartItemType[] = [
-            {
-                id: 'cartitem1', cartId: 'cart123', productId: 'prod1', quantity: 1, price: 129.99, product: dummyProducts[0], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
-            },
-            {
-                id: 'cartitem2', cartId: 'cart123', productId: 'prod2', quantity: 2, price: 199.99, product: dummyProducts[1], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
-            },
-            {
-                id: 'cartitem3', cartId: 'cart123', productId: 'prod3', quantity: 1, price: 49.99, product: dummyProducts[2], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
-            },
-        ];
-        setItems(dummyCartItems); // Use dummy data for now
-    }, []);
+        setItems(cartItems);
+    }, [cartItems]);
 
 
 

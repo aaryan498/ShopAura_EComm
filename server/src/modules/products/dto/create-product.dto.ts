@@ -14,7 +14,7 @@ export class CreateProductDto {
     @ApiProperty({ description: 'Product Description', example: 'Wireless Earphone with 10 hours of battery life' })
     @IsOptional()
     @IsString({ message: 'Product Description must be a string'})
-    @MaxLength(400, { message: 'Product Description must be less than 400 characters'})
+    @MaxLength(1000, { message: 'Product Description must be less than 400 characters'})
     description? : string;
 
 
@@ -39,7 +39,7 @@ export class CreateProductDto {
     @ApiProperty({ description: 'Product Image URL', example: 'https://example.com/image.jpg' })
     @IsOptional()
     @IsString({ message: 'Product Image URL must be a string'})
-    @MaxLength(200, { message: 'Product Image URL must be less than 200 characters'})
+    @MaxLength(500, { message: 'Product Image URL must be less than 200 characters'})
     imageUrl? : string;
 
 

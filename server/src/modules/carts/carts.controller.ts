@@ -1,6 +1,6 @@
-import { Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { CartsService } from './carts.service';
-import { ApiBearerAuth, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiResponse, ApiTags, ApiTooManyRequestsResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiResponse, ApiTags, ApiTooManyRequestsResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { ModerateThrottle } from 'src/common/decorators/custom-throttler.decorator';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
@@ -8,6 +8,7 @@ import { GetUser } from 'src/common/decorators/get-user.decorator';
 import { CartApiResponseDto, CartResponseDto } from './dto/cart-response.dto';
 import { Role } from 'src/generated/prisma/enums';
 import { Roles } from 'src/common/decorators/roles.decorator';
+import { UpdateCartProductQuantityDto } from './dto/update-cart.dto';
 
 @ApiTags('Carts')
 @UseGuards(JwtAuthGuard)
@@ -119,19 +120,17 @@ export class CartsController {
 
 
 
-    @Post(':id')
+    @Patch()
     @ModerateThrottle()
     @ApiOperation({
-        summary: "Increase product quantity in to cart",
-        description: "User increase product quantity into their current cart",
+        summary: "Increase/Decrease product quantity in to cart",
+        description: "User increase/decrease product quantity into their current cart",
     })
-    @ApiParam({
-        name: 'id',
-        description: 'Product ID',
-        type: String,
+    @ApiBody({
+        type: UpdateCartProductQuantityDto,
     })
     @ApiOkResponse({
-        description: 'Increased product quantity to cart',
+        description: 'Increased/Decreased product quantity to cart',
         type: CartApiResponseDto,
     })
     @ApiForbiddenResponse({
@@ -140,8 +139,8 @@ export class CartsController {
     @ApiTooManyRequestsResponse({
         description: 'Too many requests - rate limit exceeded'
     })
-    async increaseProductQuantityInCart(@GetUser('id') userId: string, @Param('id') productId: string, quantity: number) : Promise<CartApiResponseDto<CartResponseDto>> {
-        return await this.cartsService.updateCartProductQuantity(userId, productId, quantity);
+    async updateProductQuantityInCart(@GetUser('id') userId: string, @Body() updateCartDto: UpdateCartProductQuantityDto) : Promise<CartApiResponseDto<CartResponseDto>> {
+        return await this.cartsService.updateCartProductQuantity(userId, updateCartDto);
     }
 
 
@@ -167,7 +166,7 @@ export class CartsController {
         description: 'Too many requests - rate limit exceeded'
     })
     async deleteProductFromCart(@GetUser('id') userId: string, @Param('id') productId: string) : Promise<CartApiResponseDto<CartResponseDto>> {
-        return await this.cartsService.addProduct(userId, productId);
+        return await this.cartsService.removeProduct(userId, productId);
     }
     
 

@@ -11,10 +11,12 @@ import { useRouter } from 'next/navigation';
 import { OrderItem, Order } from '@/types/order.types';
 import { FiCreditCard, FiCheckCircle, FiShoppingCart, FiArrowRight } from 'react-icons/fi';
 import { useOrder } from '@/hooks/useOrder';
+import { useAuth } from '@/hooks/useAuth';
 
 type Step = 1 | 2 | 3;
 
 const CheckOutClient = () => {
+    console.log("Checkout Render");
 
     const [currentStep, setCurrentStep] = useState<Step>(1);
     const [selectedPayment, setSelectedPayment] = useState<string>("");
@@ -26,6 +28,7 @@ const CheckOutClient = () => {
     const { clientSecret, confirmPayment, createPaymentIntent } = usePayment();
     const { items, totalPrice, clearCart } = useCart();
     const { createOrder } = useOrder();
+    const { isAuthenticated } = useAuth();
 
     const router = useRouter();
 
@@ -35,17 +38,27 @@ const CheckOutClient = () => {
         setStripeError(null);
     }
 
-    // useEffect(()=>{
-    //     if(items.length === 0 && !orderId){ // Only redirect if cart is empty AND no order has been created yet
-    //         router.push("/cart");
-    //     }
-    // }, [orderId, items, router]);
+    useEffect(()=>{
+      if(!isAuthenticated){
+        router.push('/auth/login?redirect=/checkout');
+      }
+    }, [router, isAuthenticated]);
+
+    useEffect(()=>{
+        if(items.length === 0 && !orderId){ // Only redirect if cart is empty AND no order has been created yet
+            router.push("/cart");
+        }
+    }, [orderId, items, router]);
+
+    
 
     const shippingCost = totalPrice > 400 ? 0 : 30;
     const finalTotal = totalPrice + shippingCost;
 
     useEffect(()=>{
+        console.log("Effect Ran");
         const createOrderAutomatically = async () => {
+          console.log("setIsCreatingOrder true");
             setIsCreatingOrder(true);
             setStripeError(null);
 
@@ -64,10 +77,11 @@ const CheckOutClient = () => {
                 if(!order){
                     throw new Error("Failed to create order");
                 }
+                console.log("setOrderId");
                 setOrderId(order.id); // Crucial: Set the orderId here
 
                 if(selectedPayment === "stripe"){
-
+                    
                     const createdPayment = await createPaymentIntent({
                         orderId: order.id,
                         amount: totalPrice,
@@ -92,14 +106,14 @@ const CheckOutClient = () => {
         createOrderAutomatically();
     }, [
         selectedPayment,
-        orderId,
-        isCreatingOrder,
-        clientSecret,
+        // orderId,
+        // isCreatingOrder,
+        // clientSecret,
         items,
         createOrder,
         createPaymentIntent,
         totalPrice,
-        router, // Added router to dependency array for useEffect cleanup
+        // router, // Added router to dependency array for useEffect cleanup
     ])
 
     const handlePaymentSuccess = async(paymentIntentId: string) => {

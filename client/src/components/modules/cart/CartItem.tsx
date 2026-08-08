@@ -31,8 +31,8 @@ const CartItemComponent = ({ item }: { item: CartItemType }) => {
   const handleRemoveItem = async () => {
     if(window.confirm(`Remove ${item.product.name} from cart ?`)){
       await removeProductFromCart(item.product.id);
+      alert(`Removed item: ${item.product.name}`);
     }
-    alert(`Removed item: ${item.product.name}`);
   };
 
   const itemTotal = item.price * item.quantity;

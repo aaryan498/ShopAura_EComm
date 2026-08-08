@@ -61,6 +61,7 @@ async function bootstrap() {
       }, 'JWT-Refresh',
     )
     .addServer('http://localhost:3000', 'Development Server')
+    .addServer('http://localhost:3001', 'New Development Server')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('apidocs', app, document, {

@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CartApiResponseDto, CartResponseDto } from './dto/cart-response.dto';
 import { Cart, CartItem, Product, User } from 'src/generated/prisma/client';
+import { UpdateCartProductQuantityDto } from './dto/update-cart.dto';
 
 @Injectable()
 export class CartsService {
@@ -222,7 +223,9 @@ export class CartsService {
     }
 
 
-    async updateCartProductQuantity(userId: string, productId: string, quantity: number) : Promise<CartApiResponseDto<CartResponseDto>> {
+    async updateCartProductQuantity(userId: string, updateCartDto: UpdateCartProductQuantityDto) : Promise<CartApiResponseDto<CartResponseDto>> {
+
+        const { quantity, productId } = updateCartDto;
 
         if(quantity <= 0) throw new BadRequestException('Quantity must be greater than 0');
 

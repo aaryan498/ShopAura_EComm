@@ -1,7 +1,4 @@
 import axios from "axios";
-import { config } from "process";
-import { SiAxios } from "react-icons/si";
-import { AuthService } from "./auth.service";
 import { store } from "@/store";
 import { clearAuth, setAccessToken } from "@/slices/authSlice";
 
@@ -13,12 +10,19 @@ export const apiClient = axios.create({
     timeout: 10000,
 })
 
+export const authClient = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    headers: {
+        "Content-Type": "application/json",
+    },
+});
+
 apiClient.interceptors.request.use(
     (config) => {
         const state = store.getState();
         const token = state.auth.accessToken;
 
-        if(token){
+        if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
@@ -31,27 +35,46 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
     (response) => response,
-    async(error) => {
+    async (error) => {
         const originalRequest = error.config;
-        if(error.response.status === 401 && !originalRequest._retry){
+        if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
             originalRequest._retry = true;
 
             const state = store.getState();
             const refreshToken = state.auth.refreshToken;
 
-            if(refreshToken){
-                const newAccessToken = await AuthService.refreshToken(refreshToken);
-                if(newAccessToken){
-                    store.dispatch(setAccessToken(newAccessToken));
-                    originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-                    return apiClient(originalRequest);
+            if (refreshToken) {
+
+                try {
+
+                    const response = await authClient.post<{ accessToken: string }>(
+                        "/auth/refresh-token",
+                        { refreshToken }
+                    );
+
+                    const newAccessToken = response.data.accessToken;
+
+                    if (newAccessToken) {
+                        store.dispatch(setAccessToken(newAccessToken));
+                        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                        return apiClient(originalRequest);
+                    }
+
+
+                } catch (refreshError) {
+                    store.dispatch(clearAuth());
+                    if (typeof window !== "undefined") {
+                        window.location.href = '/auth/login';
+                    }
+                    return Promise.reject(refreshError);
                 }
 
             }
             store.dispatch(clearAuth());
-            if(typeof window == undefined){
-                window.location.href = 'auth/login';
+            if (typeof window !== "undefined") {
+                window.location.href = '/auth/login';
             }
+            return Promise.reject(error);
         }
         return Promise.reject(error);
     }
