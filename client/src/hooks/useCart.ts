@@ -5,9 +5,6 @@ import { Product } from "@/types/product.types";
 import { useDispatch, useSelector } from "react-redux";
 import { CartService } from "@/services/api/cart.service";
 import { setCart as setCartAction } from "@/slices/cartSlice";
-import { addToCart as addToCartAction } from "@/slices/cartSlice";
-import { removeProductFromCart as removeProductFromCartAction } from "@/slices/cartSlice";
-import { clearCart as clearCartAction } from "@/slices/cartSlice";
 
 export function useCart() {
 
@@ -105,12 +102,61 @@ const [error, setError] = useState<string | null>(null);
 };
 
     const removeProductFromCart = async (productId: string) => {
-        dispatch(removeProductFromCartAction(productId));
-    }
-    const clearCart = async () => {
-        dispatch(clearCartAction());
-    }
+    setIsLoading(true);
+    setError(null);
 
+    try {
+        const response = await CartService.removeProduct(productId);
+
+        if (response.success) {
+            dispatch(setCartAction(response.data.items));
+            return;
+        }
+
+        throw new Error(
+            response.message || "Failed to remove product from cart"
+        );
+
+    } catch (error) {
+        const message =
+            error instanceof Error
+                ? error.message
+                : "Failed to remove product from cart";
+
+        setError(message);
+    } finally {
+        setIsLoading(false);
+    }
+};
+
+
+    const clearCart = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+        const response = await CartService.clearCart();
+
+        if (response.success) {
+            dispatch(setCartAction(response.data.items));
+            return;
+        }
+
+        throw new Error(
+            response.message || "Failed to clear cart"
+        );
+
+    } catch (error) {
+        const message =
+            error instanceof Error
+                ? error.message
+                : "Failed to clear cart";
+
+        setError(message);
+    } finally {
+        setIsLoading(false);
+    }
+};
     return {
         items,
         totalItems: items.reduce((sum, i) => sum + i.quantity, 0),
