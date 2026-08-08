@@ -39,6 +39,7 @@ export class CartsService {
             items: cart.cartItems.map((item)=>{
                 return {
                     id: item.id,
+                    cartId: cart.id,
                     productId: item.productId,
                     productName: item.product.name,
                     productImageUrl: item.product.imageUrl,
