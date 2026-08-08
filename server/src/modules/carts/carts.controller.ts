@@ -144,8 +144,8 @@ export class CartsController {
     @ApiTooManyRequestsResponse({
         description: 'Too many requests - rate limit exceeded'
     })
-    async updateProductQuantityInCart(@GetUser('id') userId: string, @Body() updateCartDto: UpdateCartProductQuantityDto) : Promise<CartApiResponseDto<CartResponseDto>> {
-        return await this.cartsService.updateCartProductQuantity(userId, updateCartDto);
+    async updateProductQuantityInCart(@GetUser('id') userId: string, @Param('id') productId: string, @Body() updateCartDto: UpdateCartProductQuantityDto) : Promise<CartApiResponseDto<CartResponseDto>> {
+        return await this.cartsService.updateCartProductQuantity(userId, productId, updateCartDto);
     }
 
 
