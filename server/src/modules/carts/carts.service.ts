@@ -240,7 +240,6 @@ export class CartsService {
 
             if(!product) throw new NotFoundException('Product not found');
 
-            if(product.stock <= 0) throw new BadRequestException('Product out of stock');
 
             let cart = await prisma.cart.findFirst({
                 where: {
@@ -251,11 +250,7 @@ export class CartsService {
             })
 
             if(!cart) {
-                cart = await prisma.cart.create({
-                    data: {
-                        userId,
-                    },
-                });
+    throw new NotFoundException('Active cart not found');
             }
 
 
