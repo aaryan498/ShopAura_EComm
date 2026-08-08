@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Product } from "src/generated/prisma/client";
 
 export class CartItemResponseDto {
 
@@ -43,6 +44,12 @@ export class CartItemResponseDto {
         example: 49.59,
     })
     subtotal!: number;
+
+        @ApiProperty({
+        description: 'Product',
+        type: Object,
+    })
+    product!: Product;
 
     @ApiProperty({
         description: 'Created At',
