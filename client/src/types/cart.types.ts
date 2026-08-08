@@ -4,26 +4,26 @@ import { Product } from "./product.types";
 
 
 export interface CartItem {
-    id: string,
-    cartId: string,
-    productId: string,
-    quantity: number,
-    price: number,
+    id: string;
+    cartId: string;
+    productId: string;
+    quantity: number;
+    price: number;
     
     // Backend response fields
     productName: string;
     productImageUrl: string | null;
     subtotal: number;
     
-    product: Product,
-    createdAt: string,
-    updatedAt: string,
+    product: Product;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface CartState {
-    items: CartItem[],
-    totalItems: number,
-    totalPrice: number,
+    items: CartItem[];
+    totalItems: number;
+    totalPrice: number;
 
 }
 
