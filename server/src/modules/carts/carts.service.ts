@@ -45,6 +45,7 @@ export class CartsService {
                     price: Number(item.product.price),
                     quantity: item.quantity,
                     subtotal: Number(item.product.price) * item.quantity,
+                    product: item.product,
                     createdAt: item.createdAt,
                     updatedAt: item.updatedAt,
                 }
