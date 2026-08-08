@@ -1,6 +1,8 @@
 import { IRootState } from "@/store";
 import { Product } from "@/types/product.types";
 import { useDispatch, useSelector } from "react-redux";
+import { CartService } from "@/services/api/cart.service";
+import { setCart as setCartAction } from "@/slices/cartSlice";
 import { addToCart as addToCartAction } from "@/slices/cartSlice";
 import { incrementProductQuantity as incrementProductQuantityAction } from "@/slices/cartSlice";
 import { decrementProductQuantity as decrementProductQuantityAction } from "@/slices/cartSlice";
@@ -14,9 +16,12 @@ export function useCart() {
 
     const dispatch = useDispatch();
 
-
     const addProductToCart = async (product: Product) => {
-        dispatch(addToCartAction(product));
+    const response = await CartService.addProduct(product.id);
+
+    if (response.success) {
+        dispatch(setCartAction(response.data.items));
+    }
     }
 
     const incrementProductQuantity = async (productId: string) => {
