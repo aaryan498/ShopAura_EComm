@@ -16,6 +16,34 @@ const [error, setError] = useState<string | null>(null);
 
     const dispatch = useDispatch();
 
+    const loadCart = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+        const response = await CartService.getCurrentCart();
+
+        if (response.success) {
+            dispatch(setCartAction(response.data.items));
+            return;
+        }
+
+        throw new Error(
+            response.message || "Failed to load cart"
+        );
+
+    } catch (error) {
+        const message =
+            error instanceof Error
+                ? error.message
+                : "Failed to load cart";
+
+        setError(message);
+    } finally {
+        setIsLoading(false);
+    }
+};
+
     const addProductToCart = async (product: Product) => {
     setIsLoading(true);
     setError(null);
@@ -165,6 +193,7 @@ const [error, setError] = useState<string | null>(null);
         updateProductQuantity,
         removeProductFromCart,
         clearCart,
+        loadCart,
         isLoading,
         error
     }
