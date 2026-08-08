@@ -10,6 +10,12 @@ export class CartItemResponseDto {
     id!: string;
 
     @ApiProperty({
+    description: 'Cart ID',
+    example: '12jsdjks-2kbssbv-hsvdhsk',
+})
+cartId!: string;
+
+    @ApiProperty({
         description: 'Product ID',
         example: '12jsdjks-2kbssbv-hsvdhsk'
     })
