@@ -427,4 +427,60 @@ export class CartsService {
 
         return this.wrap(updatedCart);        
     }
+
+
+    async clearCart(userId: string): Promise<CartApiResponseDto<CartResponseDto>> {
+
+    const updatedCart = await this.prisma.$transaction(async (prisma) => {
+
+        const cart = await prisma.cart.findFirst({
+            where: {
+                userId,
+                checkoutCompleted: false,
+            },
+            include: {
+                cartItems: true,
+            },
+        });
+
+        if(!cart) throw new NotFoundException('Active cart not found');
+
+        for(const item of cart.cartItems){
+            await prisma.product.update({
+                where: {
+                    id: item.productId,
+                },
+                data: {
+                    stock: {
+                        increment: item.quantity,
+                    },
+                },
+            });
+        }
+
+        await prisma.cartItem.deleteMany({
+            where: {
+                cartId: cart.id,
+            },
+        });
+
+        return await prisma.cart.findUnique({
+            where: {
+                id: cart.id,
+            },
+            include: {
+                cartItems: {
+                    include: {
+                        product: true,
+                    },
+                },
+                user: true,
+            },
+        });
+    });
+
+    if(!updatedCart) throw new NotFoundException('Cart not found');
+
+    return this.wrap(updatedCart);
+    }
 }
