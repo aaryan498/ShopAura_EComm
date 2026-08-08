@@ -165,6 +165,8 @@ const [error, setError] = useState<string | null>(null);
         updateProductQuantity,
         removeProductFromCart,
         clearCart,
+        isLoading,
+        error
     }
 
 }
