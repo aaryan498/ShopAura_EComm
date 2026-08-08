@@ -1,3 +1,5 @@
+"use client"
+import { useState } from "react";
 import { IRootState } from "@/store";
 import { Product } from "@/types/product.types";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,12 +20,32 @@ const [error, setError] = useState<string | null>(null);
     const dispatch = useDispatch();
 
     const addProductToCart = async (product: Product) => {
-    const response = await CartService.addProduct(product.id);
+    setIsLoading(true);
+    setError(null);
 
-    if (response.success) {
-        dispatch(setCartAction(response.data.items));
+    try {
+        const response = await CartService.addProduct(product.id);
+
+        if (response.success) {
+            dispatch(setCartAction(response.data.items));
+            return;
+        }
+
+        throw new Error(
+            response.message || "Failed to add product to cart"
+        );
+
+    } catch (error) {
+        const message =
+            error instanceof Error
+                ? error.message
+                : "Failed to add product to cart";
+
+        setError(message);
+    } finally {
+        setIsLoading(false);
     }
-    }
+};
 
     const updateProductQuantity = async (
     productId: string,
