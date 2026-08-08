@@ -13,7 +13,7 @@ import { UpdateCartProductQuantityDto } from './dto/update-cart.dto';
 @ApiTags('Carts')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth('JWT-auth')
-@Controller('Carts')
+@Controller('carts')
 export class CartsController {
 
     constructor( private readonly cartsService : CartsService ) {}
@@ -120,11 +120,16 @@ export class CartsController {
 
 
 
-    @Patch()
+    @Patch(':id')
     @ModerateThrottle()
     @ApiOperation({
         summary: "Increase/Decrease product quantity in to cart",
         description: "User increase/decrease product quantity into their current cart",
+    })
+    @ApiParam({
+        name: 'id',
+        description: 'Product ID',
+        type: String,
     })
     @ApiBody({
         type: UpdateCartProductQuantityDto,
