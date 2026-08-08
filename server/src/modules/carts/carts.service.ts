@@ -223,9 +223,8 @@ export class CartsService {
     }
 
 
-    async updateCartProductQuantity(userId: string, updateCartDto: UpdateCartProductQuantityDto) : Promise<CartApiResponseDto<CartResponseDto>> {
+    async updateCartProductQuantity(userId: string, productId: string, quantity: number) : Promise<CartApiResponseDto<CartResponseDto>> {
 
-        const { quantity, productId } = updateCartDto;
 
         if(quantity <= 0) throw new BadRequestException('Quantity must be greater than 0');
 
